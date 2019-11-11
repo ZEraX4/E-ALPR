@@ -206,7 +206,7 @@ if __name__ == '__main__':
 
     if args.cam:
         # Web-cam input
-        cap = cv2.VideoCapture("http://192.168.137.51:8080/video")
+        cap = cv2.VideoCapture("Your Camera URL")
 
     elif args.video:
         cap = cv2.VideoCapture(args.video)
