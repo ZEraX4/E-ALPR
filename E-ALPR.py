@@ -1,3 +1,8 @@
+"""
+Some of this code is the same or an edited version from Adrian Rosebrock's "YOLO object detection with OpenCV" article
+on his PyImageSearch Blog.
+You can find it here: https://www.pyimagesearch.com/2018/11/12/yolo-object-detection-with-opencv/
+"""
 import argparse
 import sys
 from collections import Counter
