@@ -10,7 +10,7 @@ from PIL import Image, ImageDraw, ImageFont
 parser = argparse.ArgumentParser(description='Data Generator')
 parser.add_argument('--fonts', help='Path to fonts folder.', required=True)
 parser.add_argument('--out', help='Path to out folder.', required=True)
-parser.add_argument('--size', help='Size of the images.', default=(50, 50), type=tuple)
+parser.add_argument('--size', help='Size of the images.', nargs=2, default=[40, 40], type=int)
 parser.add_argument('--count', help='Number of files for single char in a single font.', type=int, default=50)
 args = parser.parse_args()
 
@@ -39,7 +39,7 @@ def generate_images(fontSize, imageSize, dataPath, dataSize, fontFiles):
         iaa.Sometimes(0.3, iaa.Affine(
             scale={"x": (0.8, 1.2), "y": (0.8, 1.2)},
             rotate=(-20, 20)
-        ))], random_order=True)  # apply augmenters in random order
+        ))], random_order=True)
 
     for idx, (key, value) in enumerate(alphabet.items()):
         os.makedirs("{}/{}".format(dataPath, idx), exist_ok=True)
@@ -53,7 +53,6 @@ def generate_images(fontSize, imageSize, dataPath, dataSize, fontFiles):
             img_aug = seq(images=img)
             for idx2, value2 in enumerate(img_aug):
                 kernel = np.ones((3, 3), dtype=np.uint8)
-                # cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (1, 5))
                 thresh = cv2.dilate(value2, kernel, iterations=3)
                 cns = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
                 cns = imutils.grab_contours(cns)
@@ -66,4 +65,4 @@ def generate_images(fontSize, imageSize, dataPath, dataSize, fontFiles):
 
 if os.path.exists(args.fonts):
     fonts = os.listdir(args.fonts)
-    generate_images(50, args.size, args.out, args.count, fonts)
+    generate_images(50, tuple(args.size), args.out, args.count, fonts)
