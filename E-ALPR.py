@@ -210,7 +210,11 @@ if __name__ == '__main__':
 
     if args.cam:
         # Web-cam input
-        cap = cv2.VideoCapture("Your Camera URL")
+        try:
+            cam = int(args.cam)
+            cap = cv2.VideoCapture(cam)
+        except ValueError:
+            cap = cv2.VideoCapture(args.cam)
 
     elif args.video:
         cap = cv2.VideoCapture(args.video)
