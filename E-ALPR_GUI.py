@@ -168,7 +168,7 @@ class Form(QMainWindow):
         self.imageCheck.setText(QtWidgets.QApplication.translate("Dialog", "Image", None, -1))
         self.videoCheck.setText(QtWidgets.QApplication.translate("Dialog", "Video", None, -1))
         self.cameraCheck.setText(QtWidgets.QApplication.translate("Dialog", "Camera", None, -1))
-        self.tfModelLabel.setText(QtWidgets.QApplication.translate("Dialog", "Tensorflow Model", None, -1))
+        self.tfModelLabel.setText(QtWidgets.QApplication.translate("Dialog", "TF Lite Model", None, -1))
         self.yoloWeightLabel.setText(QtWidgets.QApplication.translate("Dialog", "YOLO Weights", None, -1))
         self.yoloConfLabel.setText(QtWidgets.QApplication.translate("Dialog", "YOLO Config", None, -1))
         self.predictButton.setText(QtWidgets.QApplication.translate("Dialog", "Predict", None, -1))
