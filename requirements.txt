@@ -1,0 +1,10 @@
+scikit-learn
+tensorflow
+qimage2ndarray
+PySide2
+joblib
+imgaug
+imutils
+opencv-python
+pillow
+numpy

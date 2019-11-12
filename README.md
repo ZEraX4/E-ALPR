@@ -5,7 +5,12 @@
  the place of the plate then does some image processing to extract the characters from the plate 
  then passes it to a generated [Tensorflow](https://www.tensorflow.org) model for recognizing the 
  character using classification.
-## How to use:
+ ## Requirements:
+ Make sure you have the necessary packages by doing this:
+ ```bash
+ pip install -r requirements.txt 
+ ```
+ ## How to use:
  First, you need to generate some characters data to train the recognition model on by running 
  the `Generate.py` script with `--fonts` parameter taking the fonts directory that include the 
  fonts you want to generate image for, and `--out` parameter referring to the output directory.
