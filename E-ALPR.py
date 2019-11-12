@@ -228,12 +228,12 @@ if __name__ == '__main__':
         parser.print_help()
         sys.exit(2)
 
-    width = round(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-    height = round(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    frWidth = round(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    frHeight = round(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
     # Get the video writer initialized to save the output video
     if args.video or args.cam:
-        vid_writer = cv2.VideoWriter(outputFile, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), 10, (width, height))
+        vid_writer = cv2.VideoWriter(outputFile, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), 10, (frWidth, frHeight))
 
     while cap and cv2.waitKey(1):
         if cv2.waitKey(1) == ord('q'):
@@ -263,7 +263,7 @@ if __name__ == '__main__':
             frame[0:final.shape[0], 0:final.shape[1], :] = final
             image = Image.fromarray(frame)
             draw = ImageDraw.Draw(image)
-            font = ImageFont.truetype('fonts/tradbdo.ttf', round(width / 40))
+            font = ImageFont.truetype('fonts/tradbdo.ttf', round(frWidth / 40))
             draw.text((10, final.shape[0]+2), out, font=font, fill=(0, 255, 0, 0))
             frame = np.array(image)
 
