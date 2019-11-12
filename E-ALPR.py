@@ -224,11 +224,12 @@ if __name__ == '__main__':
         parser.print_help()
         sys.exit(2)
 
+    width = round(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = round(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
     # Get the video writer initialized to save the output video
     if args.video or args.cam:
-        vid_writer = cv2.VideoWriter(outputFile, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), 10,
-                                     (round(cap.get(cv2.CAP_PROP_FRAME_WIDTH)),
-                                      round(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))))
+        vid_writer = cv2.VideoWriter(outputFile, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), 10, (width, height))
 
     while cap and cv2.waitKey(1):
         if cv2.waitKey(1) == ord('q'):
@@ -256,8 +257,6 @@ if __name__ == '__main__':
         if rec and plateImg is not None:
             out, final = predict_image(plateImg, model=MODEL)
             frame[0:final.shape[0], 0:final.shape[1], :] = final
-            width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
-            height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
             image = Image.fromarray(frame)
             draw = ImageDraw.Draw(image)
             font = ImageFont.truetype('fonts/tradbdo.ttf', round(width / 40))
