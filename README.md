@@ -42,7 +42,7 @@
  To use the non-gui version, you just need to pass the image to `-i` parameter and the created model
  to `-m` parameter.
  ```bash
- python E-ALPR.py -i Test/1.jpg -m model.h5
+ python E-ALPR.py -i Test/test.jpg -m model.h5
  ```
  If you want to predict on a video, you can use `-v` parameter or `-c` for a camera.
  
