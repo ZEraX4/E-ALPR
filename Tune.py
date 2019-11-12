@@ -1,6 +1,8 @@
 """
 Edited version of the example available in the OpenCV documentation website
 You can find it here: https://docs.opencv.org/4.1.2/da/d97/tutorial_threshold_inRange.html
+
+This script is used to tune the cv2.inRange() parameters for making sure the character is clearly visible
 """
 
 import cv2 as cv
@@ -81,8 +83,7 @@ cv.createTrackbar(low_V_name, window_detection_name, low_V, max_value, on_low_V_
 cv.createTrackbar(high_V_name, window_detection_name, high_V, max_value, on_high_V_thresh_trackbar)
 
 while True:
-    frame = cv.imread("../test/12.jpeg")
-    frame_HSV = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
+    frame = cv.imread("Test/1.jpg")
     frame_threshold = cv.inRange(frame, (low_H, low_S, low_V), (high_H, high_S, high_V))
 
     cv.imshow(window_capture_name, frame)
