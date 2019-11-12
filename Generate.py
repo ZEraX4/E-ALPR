@@ -44,7 +44,7 @@ def generate_images(fontSize, imageSize, dataPath, dataSize, fontFiles):
     for idx, (key, value) in enumerate(alphabet.items()):
         os.makedirs("{}/{}".format(dataPath, idx), exist_ok=True)
         for i, path in enumerate(fontFiles):
-            img = np.zeros(imageSize, np.uint8)
+            img = np.zeros(tuple(map(sum, zip(imageSize, (50, 50)))), np.uint8)
             font = ImageFont.truetype(args.fonts+'\\'+path, fontSize)
             img_pil = Image.fromarray(img)
             draw = ImageDraw.Draw(img_pil)
@@ -59,7 +59,7 @@ def generate_images(fontSize, imageSize, dataPath, dataSize, fontFiles):
                 (x, y, w, h) = cv2.boundingRect(cns[0])
                 image = value2[y:y + h, x:x + w]
                 image = square(image)
-                image = cv2.resize(image, (40, 40))
+                image = cv2.resize(image, imageSize)
                 cv2.imwrite("{}/{}/{}.jpg".format(dataPath, idx, idx2 + (dataSize * i)), image)
 
 

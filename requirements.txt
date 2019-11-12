@@ -4,7 +4,7 @@ qimage2ndarray
 PySide2
 joblib
 imgaug
+opencv-contrib-python
 imutils
-opencv-python
 pillow
 numpy
