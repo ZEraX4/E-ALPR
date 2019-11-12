@@ -39,7 +39,6 @@ net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
 outputFile = "out.avi"
 cap = None
 vid_writer = None
-font = ImageFont.truetype('fonts/tradbdo.ttf', 40)
 
 YoloClasses = 'LP'
 alphabet = {
@@ -257,9 +256,12 @@ if __name__ == '__main__':
         if rec and plateImg is not None:
             out, final = predict_image(plateImg, model=MODEL)
             frame[0:final.shape[0], 0:final.shape[1], :] = final
+            width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
+            height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
             image = Image.fromarray(frame)
             draw = ImageDraw.Draw(image)
-            draw.text((round(cap.get(cv2.CAP_PROP_FRAME_WIDTH) // 3), 100), out, font=font, fill=(0, 255, 0, 0))
+            font = ImageFont.truetype('fonts/tradbdo.ttf', round(width / 40))
+            draw.text((10, final.shape[0]+2), out, font=font, fill=(0, 255, 0, 0))
             frame = np.array(image)
 
         # Write the frame with the detection boxes
