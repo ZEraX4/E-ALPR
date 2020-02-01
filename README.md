@@ -25,12 +25,15 @@
  ```bash
  python Generate.py --fonts Fonts --out data
  ```
+ Please note that the generated data is synthetic data, that means you will not get 100% accurate results,
+ you need to train on real data to get more accuracy.
+ 
  After the data is generated, you need to train the recognition model. All you need to do is pass the
  `--path` parameter to `Train.py` script, like this:
  ```bash
  python Train.py --path data 
  ``` 
- this will train a normal [Tensorflow](https://www.tensorflow.org)  model for usage with the non-gui 
+ This will train a normal [Tensorflow](https://www.tensorflow.org)  model for usage with the non-gui 
  script, if you need to use the gui script you need to pass the `--lite` parameter to create a lite 
  model.
  ```bash
