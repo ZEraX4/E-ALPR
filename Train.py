@@ -1,15 +1,16 @@
 import argparse
 import os
 
-import cv2
-import numpy as np
-import tensorflow as tf
-from sklearn.model_selection import train_test_split
-
 parser = argparse.ArgumentParser(description='Model Trainer')
 parser.add_argument('--path', help='Path to data folder.', required=True)
 parser.add_argument('--lite', help='Generate lite Model.', action='store_true')
 args = parser.parse_args()
+
+if args.path:
+    import cv2
+    import numpy as np
+    import tensorflow as tf
+    from sklearn.model_selection import train_test_split
 
 
 def load_dataset(input_path):
@@ -55,6 +56,7 @@ test_ds = tf.data.Dataset.from_tensor_slices((X_test, y_test)).shuffle(1700).bat
 model = tf.keras.models.Sequential([
                                     tf.keras.layers.Flatten(),
                                     tf.keras.layers.Dense(128, activation='relu'),
+                                    tf.keras.layers.Dropout(0.2),
                                     tf.keras.layers.Dense(38, activation='softmax')
 ])
 

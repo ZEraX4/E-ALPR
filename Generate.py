@@ -2,10 +2,6 @@ import argparse
 import os
 import cv2
 
-import imgaug.augmenters as iaa
-import imutils
-import numpy as np
-from PIL import Image, ImageDraw, ImageFont
 
 parser = argparse.ArgumentParser(description='Data Generator')
 parser.add_argument('--fonts', help='Path to fonts folder.', required=True)
@@ -13,6 +9,12 @@ parser.add_argument('--out', help='Path to out folder.', required=True)
 parser.add_argument('--size', help='Size of the images.', nargs=2, default=[40, 40], type=int)
 parser.add_argument('--count', help='Number of files for single char in a single font.', type=int, default=50)
 args = parser.parse_args()
+
+if args.fonts:
+    import imgaug.augmenters as iaa
+    import imutils
+    import numpy as np
+    from PIL import Image, ImageDraw, ImageFont
 
 
 def square(img):
@@ -35,8 +37,8 @@ def generate_images(fontSize, imageSize, dataPath, dataSize, fontFiles):
     }
 
     seq = iaa.Sequential([
-        iaa.Sometimes(0.5, iaa.GaussianBlur(sigma=(0, 0.5))),
-        iaa.Sometimes(0.3, iaa.Affine(
+        iaa.Sometimes(0.6, iaa.Crop(percent=(0, 0.4))),
+        iaa.Sometimes(0.6, iaa.Affine(
             scale={"x": (0.8, 1.2), "y": (0.8, 1.2)},
             rotate=(-20, 20)
         ))], random_order=True)
@@ -45,13 +47,13 @@ def generate_images(fontSize, imageSize, dataPath, dataSize, fontFiles):
         os.makedirs("{}/{}".format(dataPath, idx), exist_ok=True)
         for i, path in enumerate(fontFiles):
             img = np.zeros(tuple(map(sum, zip(imageSize, (50, 50)))), np.uint8)
-            font = ImageFont.truetype(args.fonts+'\\'+path, fontSize)
+            font = ImageFont.truetype((args.fonts + '\\' + path), fontSize)
             img_pil = Image.fromarray(img)
             draw = ImageDraw.Draw(img_pil)
             draw.text((20, -15), value, font=font, fill=255)
             img = [np.array(img_pil) for _ in range(dataSize)]
-            img_aug = seq(images=img)
-            for idx2, value2 in enumerate(img_aug):
+
+            for idx2, value2 in enumerate(img):
                 kernel = np.ones((3, 3), dtype=np.uint8)
                 thresh = cv2.dilate(value2, kernel, iterations=3)
                 cns = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -60,7 +62,8 @@ def generate_images(fontSize, imageSize, dataPath, dataSize, fontFiles):
                 image = value2[y:y + h, x:x + w]
                 image = square(image)
                 image = cv2.resize(image, imageSize)
-                cv2.imwrite("{}/{}/{}.jpg".format(dataPath, idx, idx2 + (dataSize * i)), image)
+                image = seq.augment_image(image)
+                cv2.imwrite("{}/{}/{}.jpg".format(dataPath, idx, (idx2 + (dataSize * i))), image)
 
 
 if os.path.exists(args.fonts):

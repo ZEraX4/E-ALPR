@@ -7,12 +7,6 @@ import argparse
 import sys
 from collections import Counter
 
-import cv2
-import numpy as np
-from PIL import ImageFont, ImageDraw, Image
-
-MODEL = None
-
 parser = argparse.ArgumentParser(description='Licence Plate Recognition')
 parser.add_argument('-i', '--image', help='Path to image file.')
 parser.add_argument('-v', '--video', help='Path to video file.')
@@ -22,6 +16,14 @@ parser.add_argument('-d', '--debug', help='Verbose output.', action='store_true'
 parser.add_argument('--conf', default=0.5, help='Confidence Threshold.')
 parser.add_argument('--nms', default=0.5, help='Non-Maxima Suppression Threshold.')
 args = parser.parse_args()
+
+if args.model:
+    import cv2
+    import numpy as np
+    from PIL import ImageFont, ImageDraw, Image
+
+MODEL = None
+
 
 confThreshold = args.conf
 nmsThreshold = args.nms
