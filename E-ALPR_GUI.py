@@ -251,6 +251,9 @@ class Form(QMainWindow):
         settings.endGroup()
 
     def closeEvent(self, arg__1: QtGui.QCloseEvent):
+        if self.thread:
+            self.stop()
+            self.thread.wait()
         settings = QSettings("ZEraX", "E-ALPR")
         settings.beginGroup("Config")
         settings.setValue("tfModel", self.tfModelEdit.text())
