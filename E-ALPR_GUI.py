@@ -32,7 +32,7 @@ MODEL = None
 class LineEdit(QtWidgets.QLineEdit):
     def mouseDoubleClickEvent(self, arg__1: QMouseEvent):
         self.setText(QFileDialog.getOpenFileName(self,
-                                                 "Open Image", os.getcwd(),
+                                                 "Open", os.getcwd(),
                                                  "Image Files (*.png *.jpg *.mp4);;"
                                                  "Model Files (*.cfg *.h5 *.pkl *.tflite *.backup)")[0])
 
