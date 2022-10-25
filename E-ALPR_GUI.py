@@ -301,7 +301,7 @@ def getOutputsNames(n):
     # Get the names of all the layers in the network
     layersNames = n.getLayerNames()
     # Get the names of the output layers, i.e. the layers with unconnected outputs
-    return [layersNames[i[0] - 1] for i in n.getUnconnectedOutLayers()]
+    return [layersNames[i - 1] for i in n.getUnconnectedOutLayers()]
 
 
 # Draw the predicted bounding box
@@ -348,7 +348,7 @@ def postprocess(fr, outs, confT, nmsT):
     indices = cv2.dnn.NMSBoxes(boxes, confidences, confT, nmsT)
     cropped = None
     for i in indices:
-        i = i[0]
+        # i = i[0]
         box = boxes[i]
         left = max(box[0], 0)
         top = max(box[1], 0)
